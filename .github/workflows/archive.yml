@@ -1,0 +1,70 @@
+name: archive
+
+# Upstream keeps solar wind for 24 hours and alerts for about 30 days, so an hourly run
+# loses nothing even if GitHub delays or skips a few scheduled runs.
+on:
+  schedule:
+    - cron: "7 * * * *"
+  workflow_dispatch:
+
+concurrency:
+  group: archive
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  archive:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      HC_PING_URL: ${{ secrets.HC_PING_URL }}
+    steps:
+      - name: Ping healthchecks.io (start)
+        if: env.HC_PING_URL != ''
+        run: curl -fsS -m 10 --retry 3 -o /dev/null "$HC_PING_URL/start" || true
+
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Check out the data repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          repository: conhues/stormwarn-data
+          ssh-key: ${{ secrets.DATA_DEPLOY_KEY }}
+          path: archive
+          fetch-depth: 1
+
+      - uses: astral-sh/setup-uv@1c37ad07a6a961277cf70c0d37d6f313000f5884 # v10.3.0
+      - run: uv sync --locked --no-dev
+
+      - name: Archive feeds
+        id: archive
+        continue-on-error: true
+        run: uv run --no-sync stormwarn archive --root archive
+
+      - name: Commit and push
+        id: commit
+        if: always()
+        working-directory: archive
+        run: |
+          git config user.name "stormwarn-archiver"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -q -m "Archive $(date -u +%Y-%m-%dT%H:%MZ)"
+          git push -q
+
+      - name: Report outcome
+        if: always()
+        env:
+          ARCHIVE: ${{ steps.archive.outcome }}
+          COMMIT: ${{ steps.commit.outcome }}
+        run: |
+          if [ "$ARCHIVE" = success ] && [ "$COMMIT" = success ]; then
+            [ -z "$HC_PING_URL" ] || curl -fsS -m 10 --retry 3 -o /dev/null "$HC_PING_URL" || true
+          else
+            echo "archive: $ARCHIVE, commit: $COMMIT"
+            [ -z "$HC_PING_URL" ] || curl -fsS -m 10 --retry 3 -o /dev/null "$HC_PING_URL/fail" || true
+            exit 1
+          fi

@@ -1,9 +1,9 @@
 [project]
 name = "stormwarn"
 version = "0.1.0"
-description = "Add your description here"
+description = "Live geomagnetic storm onset forecasting, scored against NOAA"
 readme = "README.md"
-requires-python = ">=3.13"
+requires-python = ">=3.13,<3.14"
 dependencies = [
     "httpx>=0.28.1",
     "polars>=2.0.0",
@@ -11,7 +11,7 @@ dependencies = [
 ]
 
 [project.scripts]
-stormwarn = "stormwarn:main"
+stormwarn = "stormwarn.cli:app"
 
 [build-system]
 requires = ["uv_build>=0.12.15,<0.13.0"]
@@ -22,3 +22,14 @@ dev = [
     "pytest>=9.1.1",
     "ruff>=0.17.0",
 ]
+
+[tool.ruff]
+line-length = 100
+target-version = "py313"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"

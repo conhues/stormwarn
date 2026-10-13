@@ -1,0 +1,41 @@
+{
+  "rtsw_wind_1m": [
+    {"time_tag": "2026-10-12T07:02:03", "active": false, "source": "IMAP", "proton_speed": 494.35, "proton_temperature": 20335, "proton_density": 2.09, "overall_quality": 0},
+    {"time_tag": "2026-10-12T07:02:00", "active": true, "source": "SOLAR1", "proton_speed": 490.6, "proton_temperature": 117814, "proton_density": 0.63, "proton_vx_gsm": -490.4, "alpha_density": null, "overall_quality": 0},
+    {"time_tag": "2026-10-12T06:32:00", "active": false, "source": "ACE", "proton_speed": 492.7, "proton_temperature": 133951, "proton_density": 0.0, "overall_quality": 0}
+  ],
+  "rtsw_mag_1m": [
+    {"time_tag": "2026-10-12T18:20:00", "active": true, "source": "SOLAR1", "range": null, "scale": null, "bt": 5.1, "bx_gsm": 2.0, "by_gsm": -3.1, "bz_gsm": -3.5, "overall_quality": 0},
+    {"time_tag": "2026-10-12T18:19:00", "active": false, "source": "ACE", "range": null, "scale": null, "bt": 5.3, "bx_gsm": 2.2, "by_gsm": -3.0, "bz_gsm": -3.8, "overall_quality": 0}
+  ],
+  "rtsw_ephemerides_1h": [
+    {"time_tag": "2026-09-25T09:00:00", "active": true, "source": "SOLAR1", "cadence": 3600, "x_gse": 1577422, "y_gse": 67511, "z_gse": 154497, "vx_gse": -0.01}
+  ],
+  "swpc_alerts": [
+    {"product_id": "K05W", "issue_datetime": "2026-10-10 14:42:00.000", "message": "Space Weather Message Code: WARK05\r\nSerial Number: 2270\r\nIssue Time: 2026 Oct 10 1442 UTC\r\n\r\nWARNING: Geomagnetic K-index of 5 expected\r\nValid From: 2026 Oct 10 1440 UTC\r\nValid To: 2026 Oct 11 0300 UTC\r\nWarning Condition: Onset"},
+    {"product_id": "K05A", "issue_datetime": "2026-10-10 15:36:00.000", "message": "Space Weather Message Code: ALTK05\r\nSerial Number: 1640\r\nIssue Time: 2026 Oct 10 1536 UTC\r\n\r\nALERT: Geomagnetic K-index of 5\r\nThreshold Reached: 2026 Oct 10 1535 UTC\r\nSynoptic Period: 1500-1800 UTC\r\nActive Warning: Yes"}
+  ],
+  "noaa_kp": [
+    {"time_tag": "2026-10-12T12:00:00", "Kp": 1.00, "a_running": 4, "station_count": 8},
+    {"time_tag": "2026-10-12T15:00:00", "Kp": 1.33, "a_running": 5, "station_count": 8}
+  ],
+  "noaa_kp_forecast": [
+    {"time_tag": "2026-10-12T15:00:00", "kp": 1.33, "observed": "estimated", "noaa_scale": null},
+    {"time_tag": "2026-10-15T00:00:00", "kp": 2.67, "observed": "predicted", "noaa_scale": null}
+  ],
+  "noaa_kp_1m": [
+    {"time_tag": "2026-10-12T05:51:00", "kp_index": 2, "estimated_kp": 2.0, "kp": "2Z"},
+    {"time_tag": "2026-10-12T05:52:00", "kp_index": 2, "estimated_kp": 2.0, "kp": "2Z"}
+  ],
+  "gfz_kp": {
+    "datetime": ["2026-10-12T15:00:00Z", "2026-10-12T18:00:00Z", "2026-10-12T21:00:00Z"],
+    "Kp": [1.0, 2.0, 1.0],
+    "status": ["pre", "pre", "pre"],
+    "meta": {"license": "CC BY 4.0", "source": "GFZ Potsdam"}
+  },
+  "gfz_hp30": {
+    "datetime": ["2026-10-12T22:00:00Z", "2026-10-12T22:30:00Z", "2026-10-12T23:00:00Z"],
+    "Hp30": [1.667, 1.333, 1.333],
+    "meta": {"license": "CC BY 4.0", "source": "GFZ Potsdam"}
+  }
+}

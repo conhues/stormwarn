@@ -1,2 +1,1 @@
-def main() -> None:
-    print("Hello from stormwarn!")
+"""Storm Warning: live geomagnetic storm onset forecasting."""
